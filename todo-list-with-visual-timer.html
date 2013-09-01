@@ -17,11 +17,6 @@
             margin: 0;
         }
 
-        input {
-            width: 4em;
-            text-align:center;
-        }
-
         body > div {        
             float: left;
             width: 33%;
@@ -35,9 +30,35 @@
             background: rgb(205,255,255);
         }
         
+        input {
+            width: 4em;
+            text-align:center;
+        }
+        
+        form {
+            margin: 0 -7.5em;
+            position: relative;
+            width: 15em;
+            left: 50%;
+        }
+        
+        ul {
+            padding: 0;
+            margin: 1em;
+        }
+        
         li {
             cursor: pointer;
             list-style: none;
+        }
+
+
+        ul > li {
+            margin-bottom: 1em;
+        }
+        
+        li li {
+            margin-bottom: 0;
         }
 
         li.selected {
@@ -46,7 +67,6 @@
         
         .right li {
             text-align: right;
-            margin-right: 2em;
         }
 
         li::before {
@@ -77,7 +97,9 @@
             font-weight: normal;
         }
 
-        
+        .ALARM canvas {
+            background-color: red;
+        }        
     </style>
 </head>
 
@@ -147,7 +169,7 @@
             bRunning=false;
             $Start.text('Start');
             $Seconds.removeAttr('disabled');
-
+            $('body').removeClass('ALARM');
             return $Timer.pietimer({
                       seconds: getSeconds()
                     , color: 'rgba(0, 255, 255, 0.8)'
@@ -155,6 +177,8 @@
                     , width: 1000
                 }
                 , function(){
+                    $('body').addClass('ALARM');
+                    // @TODO: Play alarm sound                    
                     resetTimer();
                 }
             );

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+  
+    <title>Todo List with Timer</title>
+
+    <script type='text/javascript' src='//code.jquery.com/jquery-1.9.1.js'></script>
+    <script type='text/javascript' src="https://rawgithub.com/knorthfield/pietimer/master/jquery.pietimer.js"></script>
+
+
+    <style type='text/css'>
+        body, div, canvas {
+            height: 100%;
+            width: 100%;
+        }
+
+        input {
+            width: 4em;
+            text-align:center;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="start">Start</button>
+    <label><input id="seconds" type="text" value="60"/>seconds</label>
+    <button id="reset">Reset</button>
+
+    <div id="timer"></div>
+
+    <script type='text/javascript'>
+        var   $Timer = $('#timer')
+            , $Start = $('#start')
+            , $Seconds = $('#seconds')
+            , bRunning=false
+        ;
+
+        function switchButtonText(){
+            if($Start.text() === 'Start'){
+                $Start.text('Pause');
+            } else {
+                $Start.text('Start');
+            }
+        }
+
+        function getSeconds(){
+            return $Seconds.val();
+        }
+
+        function resetTimer(p_iSeconds){
+            bRunning=false;
+            $Start.text('Start');
+            $Seconds.removeAttr('disabled');
+
+            return $Timer.pietimer({
+                      seconds: getSeconds()
+                    , color: 'rgba(0, 255, 255, 0.8)'
+                    , height: 1000
+                    , width: 1000
+                }
+                , function(){
+                    resetTimer();
+                }
+            );
+        }
+
+        $('#start').click(function(event){
+            event.preventDefault();
+            $Seconds.attr('disabled','disabled');
+
+            if(bRunning === false){
+                $Timer.pietimer('start');
+            } else {
+                $Timer.pietimer('pause');
+            }
+
+            bRunning = !bRunning;
+            switchButtonText();
+
+        });
+
+        $('#reset').click(function(){
+            event.preventDefault();
+            resetTimer();
+        });
+
+        $Seconds.click(function(){
+            resetTimer();
+        });
+
+        resetTimer();
+    </script>
+
+</body>
+</html>
+

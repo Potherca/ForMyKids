@@ -1,4 +1,4 @@
-ForMyKids
+Todo list with visual timer
 =========
 
-Random digital things a created for (one of) my kids.
+Random digital thing I created for (one of) my kids.
